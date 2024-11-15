@@ -1,0 +1,17 @@
+listeners:
+  - name: OSResources
+    type: timed
+    interval: 600 # Interval in ticks
+
+storages:
+  - name: WebSocketConsumer
+    type: websocket
+    url: ws://localhost:8080/ws
+  - name: PostgreSQLConsumer
+    type: database
+    url: jdbc:postgresql://localhost:5432/minecraft
+    username: user
+    password: pass
+  - name: FileConsumer
+    type: file
+    path: data/stats.json

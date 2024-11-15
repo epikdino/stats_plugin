@@ -8,6 +8,11 @@
   <packaging>jar</packaging>
   <name>StatsPlugin</name>
   <url>http://maven.apache.org</url>
+  <properties>
+     <maven.compiler.source>18</maven.compiler.source>
+     <maven.compiler.target>18</maven.compiler.target>
+  </properties>
+
 
   <repositories>
     <!-- This adds the Spigot Maven repository to the build -->
@@ -31,6 +36,29 @@
       <version>1.21.3-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
+    <!-- Apache Tomcat for HTTP and WebSocket -->
+    <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-core</artifactId>
+        <version>11.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-websocket</artifactId>
+        <version>11.0.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.18.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.dataformat</groupId>
+        <artifactId>jackson-dataformat-yaml</artifactId>
+        <version>2.18.1</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -38,7 +66,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
+        <version>3.6.0</version>
         <executions>
           <execution>
             <phase>package</phase>
