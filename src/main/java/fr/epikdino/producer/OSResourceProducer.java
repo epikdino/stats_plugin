@@ -5,16 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.epikdino.Stat;
+import fr.epikdino.config.ConfigManager.Config.ListenerConfig;
 import fr.epikdino.consumer.ConsumerPool;
 
 public class OSResourceProducer extends TimedProducer{
 
-    public OSResourceProducer(ConsumerPool consumers, long interval) {
-        super(consumers, interval);
+    public OSResourceProducer(ConsumerPool consumers, ListenerConfig listener) {
+        super(consumers, listener);
     }
 
     @Override
-    protected List<Stat> retrieveStats() {
+    protected List<Stat> getStatNow() {
         List<Stat> stats = new ArrayList<>();
         stats.add(getCpuUsage());
         stats.add(getRamUsage());

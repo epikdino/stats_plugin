@@ -38,4 +38,8 @@ public class Stat {
         return formatter.format(this.tsp);
     }
 
+    public String getJsonValue() {
+        return "{tsp:" + this.tspString() + ",name:" + this.name + ",value:" + this.value + "}";
+    }
+
 }

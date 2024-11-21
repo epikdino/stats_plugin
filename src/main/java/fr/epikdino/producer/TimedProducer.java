@@ -1,23 +1,21 @@
 package fr.epikdino.producer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import fr.epikdino.Stat;
+import fr.epikdino.config.ConfigManager.Config.ListenerConfig;
 import fr.epikdino.consumer.ConsumerPool;
 
 public abstract class TimedProducer extends Producer {
     private JavaPlugin plugin;
     private BukkitTask task;
 
-    public TimedProducer(ConsumerPool consumerPool, long interval) {
-        super(consumerPool);
+    public TimedProducer(ConsumerPool consumerPool, ListenerConfig listener) {
+        super(consumerPool, listener);
         this.plugin = JavaPlugin.getProvidingPlugin(getClass());
-        task = Bukkit.getScheduler().runTaskTimer(plugin, this::collect, 0L, interval);
+        task = Bukkit.getScheduler().runTaskTimer(plugin, this::collect, 0L, listener.interval);
     }
 
     public void stop() {
@@ -27,17 +25,9 @@ public abstract class TimedProducer extends Producer {
     }
 
     private void collect() {
-        for(Stat stat : retrieveStats()){
+        for(Stat stat : getStatNow()){
             consumers.consume(stat);
         }
-    }
-
-    protected List<Stat> retrieveStats() {
-        return new ArrayList<>();
-    }
-
-    protected Stat retrieveStat() {
-        throw new UnsupportedOperationException("Not implemented here");
     }
 
     @Override

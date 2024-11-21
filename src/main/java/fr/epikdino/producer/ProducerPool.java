@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import fr.epikdino.config.ConfigManager.Config.Listener;
+import fr.epikdino.config.ConfigManager.Config.ListenerConfig;
 import fr.epikdino.consumer.ConsumerPool;
 
 public class ProducerPool {
 
     List<Producer> producers;
 
-    public ProducerPool(List<Listener> listeners, ConsumerPool consumers) {
+    public ProducerPool(List<ListenerConfig> listeners, ConsumerPool consumers) {
         ProducerFactory factory = new ProducerFactory();
         producers = new ArrayList<>();
-        for (Listener listener : listeners) {
+        for (ListenerConfig listener : listeners) {
             producers.add(factory.createProducer(listener, consumers));
         }
     }

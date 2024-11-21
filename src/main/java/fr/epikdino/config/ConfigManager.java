@@ -36,32 +36,18 @@ public class ConfigManager {
     }
 
     public static class Config {
-        public List<Storage> storages;
-        public List<Listener> listeners;
+        public List<StorageConfig> storages;
+        public List<ListenerConfig> listeners;
 
-        public static class Storage {
+        public static class StorageConfig {
             public String type; // file, database, websocket
-            public FileConfig file;
-            public DatabaseConfig database;
-            public WebSocketConfig websocket;
-
-            public static class FileConfig {
-                public String path;
-            }
-
-            public static class DatabaseConfig {
-                public String url;
-                public String username;
-                public String password;
-            }
-
-            public static class WebSocketConfig {
-                public boolean enabled;
-                public int port;
-            }
+            public String filepath;
+            public long interval; // in seconds
+            public long max_size; // in elements
+            public int  port; // for websocket or database
         }
 
-        public static class Listener {
+        public static class ListenerConfig {
             public String type; // timed, event
             public String name;
             public int interval; // in seconds

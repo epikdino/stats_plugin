@@ -9,10 +9,9 @@
   <name>StatsPlugin</name>
   <url>http://maven.apache.org</url>
   <properties>
-     <maven.compiler.source>18</maven.compiler.source>
-     <maven.compiler.target>18</maven.compiler.target>
+     <maven.compiler.source>21</maven.compiler.source>
+     <maven.compiler.target>21</maven.compiler.target>
   </properties>
-
 
   <repositories>
     <!-- This adds the Spigot Maven repository to the build -->
@@ -27,6 +26,10 @@
       <enabled>false</enabled>
       </snapshots>
     </repository>
+    <repository>
+        <id>papermc-repo</id>
+        <url>https://papermc.io/repo/repository/maven-public/</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -35,17 +38,6 @@
       <artifactId>spigot-api</artifactId>
       <version>1.21.3-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
-    </dependency>
-    <!-- Apache Tomcat for HTTP and WebSocket -->
-    <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-core</artifactId>
-        <version>11.0.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.tomcat.embed</groupId>
-        <artifactId>tomcat-embed-websocket</artifactId>
-        <version>11.0.0</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
     <dependency>
@@ -58,6 +50,37 @@
         <groupId>com.fasterxml.jackson.dataformat</groupId>
         <artifactId>jackson-dataformat-yaml</artifactId>
         <version>2.18.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.glassfish.tyrus/tyrus-server -->
+    <dependency>
+        <groupId>org.glassfish.tyrus</groupId>
+        <artifactId>tyrus-server</artifactId>
+        <version>2.2.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/jakarta.websocket/jakarta.websocket-api -->
+    <dependency>
+        <groupId>jakarta.websocket</groupId>
+        <artifactId>jakarta.websocket-api</artifactId>
+        <version>2.2.0</version>
+    </dependency>
+    <!-- Test dependencies -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.8.1</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.github.seeseemelk</groupId>
+        <artifactId>MockBukkit-v1.21</artifactId>
+        <version>3.133.2</version>
+        <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -79,6 +102,32 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <parallel>methods</parallel>
+          <threadCount>10</threadCount>
+          <includes>
+            <include>**/Test*.java</include>
+            <include>**/Test.java</include>
+            <include>**/TestCase.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/*Abstract*Test.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.19.1</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

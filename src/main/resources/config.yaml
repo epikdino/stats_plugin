@@ -4,7 +4,7 @@ listeners:
     interval: 600 # Interval in ticks
 
 storages:
-  - name: WebSocketConsumer
+  - name: WebSocket
     type: websocket
     url: ws://localhost:8080/ws
   - name: PostgreSQLConsumer
@@ -12,6 +12,7 @@ storages:
     url: jdbc:postgresql://localhost:5432/minecraft
     username: user
     password: pass
-  - name: FileConsumer
+  - name: Csv
     type: file
     path: data/stats.json
+  

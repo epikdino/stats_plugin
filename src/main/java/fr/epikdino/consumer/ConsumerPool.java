@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import fr.epikdino.Stat;
-import fr.epikdino.config.ConfigManager.Config.Storage;
+import fr.epikdino.config.ConfigManager.Config.StorageConfig;
 
 public class ConsumerPool {
 
     private List<Consumer> consumers;
 
-    public ConsumerPool(List<Storage> storages) {
+    public ConsumerPool(List<StorageConfig> storages) {
         ConsumerFactory factory = new ConsumerFactory();
         consumers = new ArrayList<>();
-        for (Storage storage : storages) {
+        for (StorageConfig storage : storages) {
             consumers.add(factory.createConsumer(storage));
         }
     }
@@ -31,7 +31,11 @@ public class ConsumerPool {
 
     public void consume(Stat stat) {
         for(Consumer consumer : consumers) {
-            consumer.consume(stat);
+            try{
+                consumer.addStat(stat);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

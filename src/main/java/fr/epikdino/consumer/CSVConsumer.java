@@ -15,7 +15,7 @@ public class CSVConsumer extends BatchConsumer{
     }
 
     @Override
-    public void consumeBatch() {
+    public void consume() {
         try (FileWriter fileWriter = new FileWriter(filepath, true)) {
             while (! queue.isEmpty()){
                 Stat stat = queue.poll();
@@ -28,8 +28,6 @@ public class CSVConsumer extends BatchConsumer{
     }
 
     @Override
-    public void close() {
-        
-    }
+    public void startConsumer() {}
     
 }
