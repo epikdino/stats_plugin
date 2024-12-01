@@ -1,5 +1,5 @@
 name: StatsPlugin
-main: fr.epikdino.Main
+main: fr.epikdino.StatsPlugin
 version: "1.0"
 api-version: 1.21
 api: "1.0"

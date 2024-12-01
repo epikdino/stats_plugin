@@ -2,31 +2,34 @@ package fr.epikdino.consumer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.bukkit.plugin.Plugin;
 
 import fr.epikdino.Stat;
 import fr.epikdino.config.ConfigManager.Config.StorageConfig;
+import fr.epikdino.logger.PluginLogger;
 
-public class ConsumerPool {
+public class ConsumerPool implements AutoCloseable{
 
     private List<Consumer> consumers;
+    private PluginLogger logger;
 
-    public ConsumerPool(List<StorageConfig> storages) {
+    public ConsumerPool(List<StorageConfig> storages, Plugin plugin) {
+        this.logger = new PluginLogger(plugin, "ConsumerPool");
         ConsumerFactory factory = new ConsumerFactory();
         consumers = new ArrayList<>();
         for (StorageConfig storage : storages) {
-            consumers.add(factory.createConsumer(storage));
+            consumers.add(factory.createConsumer(storage, plugin));
         }
+        logger.info("Initialized consumer pool.");
     }
 
-    public void finalize() {
+    @Override
+    public void close() {
+        logger.info("Closing all consumers.");
         for (Consumer consumer : consumers) {
             consumer.close();
         }
-    }
-
-    public void dump(Logger logger) {
-        logger.info("Initialized consumer pool.");
     }
 
     public void consume(Stat stat) {

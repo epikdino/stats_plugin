@@ -1,0 +1,24 @@
+listeners:
+  - name: resources
+    type: OSResources
+    interval: 600 # Interval in ticks
+  - name: player-online
+    type: PlayerOnline
+  - name: player-death
+    type: PlayerDeath
+  - name: player-world
+    type: PlayerWorld
+    interval: 100
+  - name: entity-killed
+    type: EntityKilled
+  - name: commands
+    type: Command
+    filter: ".*"
+    capture: ([\S]+\s)*([\S]+)
+
+storages:
+  - type: WebSocket
+    port: 8080
+  - type: Csv
+    path: /data/stats.csv
+  

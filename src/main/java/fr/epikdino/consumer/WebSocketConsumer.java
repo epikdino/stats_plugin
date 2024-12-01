@@ -1,14 +1,19 @@
 package fr.epikdino.consumer;
 
+import org.bukkit.plugin.Plugin;
+
 import fr.epikdino.Stat;
+import fr.epikdino.config.ConfigManager.Config.StorageConfig;
 import fr.epikdino.tools.websocket.WebSocketServerHandler;
 
 public class WebSocketConsumer extends RealtimeConsumer {
 
     private WebSocketServerHandler server;
 
-    public WebSocketConsumer(int port) {
-        this.server = new WebSocketServerHandler(port);
+    public WebSocketConsumer(StorageConfig config, Plugin plugin) {
+        super(config.name, plugin);
+        logger.info("Initializing wbsocket consumer on port " + config.port);
+        this.server = new WebSocketServerHandler(config.port);
     }
 
     @Override
@@ -21,7 +26,8 @@ public class WebSocketConsumer extends RealtimeConsumer {
 
     @Override
     public void close() {
-        server.stop();
+        logger.info("Closing websocket consumer");
+        this.server.stop();
         super.close();
     }
 

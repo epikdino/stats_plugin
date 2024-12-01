@@ -1,0 +1,11 @@
+listeners:
+  - name: resources
+    type: OSResources
+    interval: 600 # Interval in ticks
+
+storages:
+  - type: WebSocket
+    port: 8080
+  - type: Csv
+    path: /data/stats.csv
+  

@@ -2,28 +2,30 @@ package fr.epikdino.producer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.bukkit.plugin.Plugin;
 
 import fr.epikdino.config.ConfigManager.Config.ListenerConfig;
 import fr.epikdino.consumer.ConsumerPool;
+import fr.epikdino.logger.PluginLogger;
 
 public class ProducerPool {
 
-    List<Producer> producers;
+    private List<Producer> producers;
+    private PluginLogger logger;
 
-    public ProducerPool(List<ListenerConfig> listeners, ConsumerPool consumers) {
+    public ProducerPool(List<ListenerConfig> listeners, ConsumerPool consumers, Plugin plugin) {
+        this.logger = new PluginLogger(plugin, "ProducerPool");
         ProducerFactory factory = new ProducerFactory();
         producers = new ArrayList<>();
         for (ListenerConfig listener : listeners) {
-            producers.add(factory.createProducer(listener, consumers));
+            producers.add(factory.createProducer(listener, consumers, plugin));
         }
-    }
-
-    public void dump(Logger logger) {
         logger.info("Inittialized producer pool.");
     }
 
-    public void finalize() {
+    public void close() {
+        logger.info("Closing all producers.");
         for (Producer producer : producers) {
             producer.close();
         }

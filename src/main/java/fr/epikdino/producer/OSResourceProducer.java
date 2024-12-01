@@ -4,14 +4,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.plugin.Plugin;
+
 import fr.epikdino.Stat;
 import fr.epikdino.config.ConfigManager.Config.ListenerConfig;
 import fr.epikdino.consumer.ConsumerPool;
 
 public class OSResourceProducer extends TimedProducer{
 
-    public OSResourceProducer(ConsumerPool consumers, ListenerConfig listener) {
-        super(consumers, listener);
+    public OSResourceProducer(ConsumerPool consumers, ListenerConfig listener, Plugin plugin) {
+        super(consumers, listener, plugin);
     }
 
     @Override

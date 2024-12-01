@@ -1,20 +1,28 @@
 package fr.epikdino.producer;
 
-import java.util.List;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.plugin.Plugin;
 
-import fr.epikdino.Stat;
 import fr.epikdino.config.ConfigManager.Config.ListenerConfig;
 import fr.epikdino.consumer.ConsumerPool;
 
 public class PlayerDeathProducer extends EventProducer {
 
-    public PlayerDeathProducer(ConsumerPool consumers, ListenerConfig listener){
-        super(consumers, listener);
+    public PlayerDeathProducer(ConsumerPool consumers, ListenerConfig listener, Plugin plugin) {
+        super(consumers, listener, plugin);
     }
 
-    @Override
-    protected List<Stat> getStatNow() {
-        throw new UnsupportedOperationException("Unimplemented method 'getStatNow'");
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        this.value = String.format("player:%s;killer:%s;level:%s;world:%s;reason:%s",
+                                event.getEntity().getName(),
+                                event.getEntity().getKiller() != null ? event.getEntity().getKiller().getName() : "Unknown",
+                                event.getEntity().getLevel(),
+                                event.getEntity().getWorld().getName(),
+                                event.getEntity().getLastDamageCause().getCause().toString());
+
+        sendStat(getStatNow());
     }
     
 }

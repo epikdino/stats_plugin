@@ -1,18 +1,17 @@
 listeners:
-  - name: OSResources
-    type: timed
+  - name: PlayerOnline
+    type: PlayerOnline
+  - name: resources
+    type: OSResources
     interval: 600 # Interval in ticks
 
 storages:
   - name: WebSocket
-    type: websocket
-    url: ws://localhost:8080/ws
-  - name: PostgreSQLConsumer
-    type: database
-    url: jdbc:postgresql://localhost:5432/minecraft
-    username: user
-    password: pass
-  - name: Csv
-    type: file
-    path: data/stats.json
+    type: WebSocket
+    port: 8080
+  - name: FileConsumer
+    type: Csv
+    filepath: /data/stats.csv
+    max_size: 100
+    interval: 600 # Interval in ticks
   

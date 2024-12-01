@@ -3,15 +3,18 @@ package fr.epikdino.consumer;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.bukkit.plugin.Plugin;
+
 import fr.epikdino.Stat;
+import fr.epikdino.config.ConfigManager.Config.StorageConfig;
 
 public class CSVConsumer extends BatchConsumer{
 
     private String filepath;
 
-    public CSVConsumer(long interval, long max_size, String filepath){
-        super(interval, max_size);
-        this.filepath = filepath;
+    public CSVConsumer(StorageConfig config, Plugin plugin) {
+        super(config, plugin);
+        this.filepath = config.filepath;
     }
 
     @Override

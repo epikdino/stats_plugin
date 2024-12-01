@@ -1,7 +1,9 @@
-package fr.epikdino;
+package fr.epikdino.integration;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+
+import fr.epikdino.StatsPlugin;
+
 import org.bukkit.plugin.Plugin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,15 +11,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MainIntegrationTest {
+class StatsPluginIntegrationTest {
 
-    private ServerMock server;
     private Plugin plugin;
 
     @BeforeEach
     void setUp() {
-        server = MockBukkit.mock();
-        plugin = MockBukkit.load(Main.class);
+        MockBukkit.mock();
+        plugin = MockBukkit.load(StatsPlugin.class);
     }
 
     @AfterEach
@@ -32,7 +33,7 @@ class MainIntegrationTest {
 
     @Test
     void testPluginDisable() {
-        plugin.onDisable();
+        MockBukkit.unmock();
         assertFalse(plugin.isEnabled());
     }
 }

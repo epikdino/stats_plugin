@@ -1,15 +1,17 @@
 package fr.epikdino.consumer;
 
+import org.bukkit.plugin.Plugin;
+
 import fr.epikdino.config.ConfigManager.Config.StorageConfig;
 
 public class ConsumerFactory {
 
-    public Consumer createConsumer(StorageConfig storage) {
+    public Consumer createConsumer(StorageConfig storage, Plugin plugin) {
         switch(storage.type) {
             case "Csv":
-                return new CSVConsumer(storage.interval, storage.max_size, storage.filepath);
+                return new CSVConsumer(storage, plugin);
             case "WebSocket":
-                return new WebSocketConsumer(storage.port);
+                return new WebSocketConsumer(storage, plugin);
             default:
                 throw new IllegalArgumentException("Unknown storage type: " + storage.type);
         }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.Plugin;
 
 import fr.epikdino.Stat;
 import fr.epikdino.config.ConfigManager.Config.ListenerConfig;
@@ -15,8 +16,8 @@ public class PlayerOnlineProducer extends EventProducer{
 
     private long onlinePlayers;
     
-    public PlayerOnlineProducer(ConsumerPool consumers, ListenerConfig listener) {
-        super(consumers, listener);
+    public PlayerOnlineProducer(ConsumerPool consumers, ListenerConfig listener, Plugin plugin) {
+        super(consumers, listener, plugin);
         onlinePlayers = 0;
     }
 

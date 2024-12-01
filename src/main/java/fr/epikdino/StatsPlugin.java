@@ -6,7 +6,7 @@ import fr.epikdino.config.ConfigManager;
 import fr.epikdino.consumer.ConsumerPool;
 import fr.epikdino.producer.ProducerPool;
 
-public class Main extends JavaPlugin {
+public class StatsPlugin extends JavaPlugin {
 
     public ConfigManager cfg;
     private ProducerPool producerPool;
@@ -21,18 +21,18 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("Minecraft plugin disabled!");
+        producerPool.close();
         producerPool = null;
+        consumerPool.close();
         consumerPool = null;
     }
 
     public void reloadConfig() {
-        cfg = ConfigManager.getInstance();
+        cfg = ConfigManager.getInstance(this);
         cfg.reload();
         producerPool = null;
         consumerPool = null;
-        consumerPool = new ConsumerPool(cfg.getConfig().storages);
-        producerPool = new ProducerPool(cfg.getConfig().listeners, consumerPool);
-        producerPool.dump(getLogger());
-        consumerPool.dump(getLogger());
+        consumerPool = new ConsumerPool(cfg.getConfig().storages, this);
+        producerPool = new ProducerPool(cfg.getConfig().listeners, consumerPool, this);
     }
 }
