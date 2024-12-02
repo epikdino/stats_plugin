@@ -1,6 +1,0 @@
-name: StatsPlugin
-main: fr.epikdino.StatsPlugin
-version: "1.0"
-api-version: 1.21
-api: "1.0"
-description: Statistics retriever for minecraft server
